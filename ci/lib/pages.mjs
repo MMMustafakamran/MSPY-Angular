@@ -39,7 +39,7 @@ export const PAGE_GROUPS = {
   generative_ui: ['frontend-tools-generative-ui'],
   interaction: ['voice-multimodal', 'human-in-the-loop'],
   shared_state: ['shared-state'],
-  threads: ['threads', 'attachments', 'headless'],
+  threads: ['threads', 'headless'],
 };
 
 export function readPageIds() {
