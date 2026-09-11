@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "project": "MsPy-angular",
+  "source": "Tested-Report.md §5 Microsoft Agent Framework (Python) — Angular Guides, 2026-09-11",
+  "updatedAt": "2026-09-11",
+  "ignoreNotes": [],
+  "pages": {
+    "chat-ui": {
+      "status": "pass",
+      "reason": "Tested-Report 2026-09-11: ✅"
+    },
+    "frontend-tools-generative-ui": {
+      "status": "pass",
+      "reason": "Tested-Report 2026-09-11: ⚠️ Custom card has no CSS; agent apologizes after rendering (machine: pass with note about the empty weather-card heading)",
+      "notes": [
+        "Weather card heading rendered empty -- the argument names in the renderer do not match the tool call"
+      ]
+    },
+    "quickstart": {
+      "status": "pass",
+      "reason": "Tested-Report 2026-09-11: ✅ (Quickstarts line: Angular (v1.71) ✅)"
+    },
+    "voice-multimodal": {
+      "status": "pass",
+      "reason": "Tested-Report 2026-09-11: ✅ (no backend TTS, transcription does nothing; the 503 on /transcribe in the console is that)",
+      "notes": [
+        "Browser console: 2 distinct error(s), first: Failed to load resource: the server responded with a st"
+      ]
+    }
+  }
+}
