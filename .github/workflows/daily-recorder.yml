@@ -23,17 +23,12 @@ name: Daily Doc Check, Version Watch and Demo Recording
 
 on:
   schedule:
-    # 05:27 UTC = 10:27 AM PKT (Asia/Karachi, UTC+5, no DST).
-    #
-    # Not 05:30, and emphatically not 06:00. GitHub's scheduler is best-effort
-    # and shared: on-the-hour and on-the-half-hour are the most contended slots
-    # on the platform, and runs queued there are routinely delayed by hours or
-    # dropped outright. This repo's own history shows the old '0 6 * * *' cron
-    # firing as late as 17:11 UTC, and on some days not at all. An odd minute
-    # is materially more likely to fire near time.
-    #
-    # This still cannot GUARANTEE 10:30 AM PKT -- no `schedule:` can. If exact
-    # timing ever matters, drive it externally via repository_dispatch.
+    # 4 AM PKT, in four waves twenty minutes apart across the twelve repos
+    # (23:04, 23:24, 23:44, 00:04 UTC) so they do not all land on the account's
+    # runner limit at the same minute -- when they did, the last workers queued
+    # for 38 minutes. GitHub's scheduler is best-effort: every cron here has
+    # fired three to six hours late. If exact timing ever matters, drive it
+    # externally via `gh workflow run`.
     - cron: '4 23 * * *'
   workflow_dispatch:
     inputs:
@@ -198,6 +193,7 @@ jobs:
           exit 0
 
       - name: Open or update the drift issue
+        continue-on-error: true
         if: steps.check.outputs.state == 'drift' && github.event_name == 'schedule'
         uses: actions/github-script@v7
         with:
@@ -397,6 +393,9 @@ jobs:
         shard: [1, 2, 3]
 
     env:
+      # Reading and thinking pauses at 85% -- typing, mouse and scrolling are
+      # not scaled. See autorecorder/core/overlays/human.ts (PACE).
+      AUTORECORD_PACE: '0.85'
       # backend/main.py prefers Azure when AZURE_OPENAI_ENDPOINT is set and
       # falls back to OpenAI, so both sets are passed and whichever is
       # configured wins. Unlike the Agno and Mastra repos, the model id here is
@@ -444,10 +443,22 @@ jobs:
           npm install -g "$PINNED"
           npm --version
 
+      # The Chromium build is keyed on the installed playwright-core version,
+      # so it downloads once per Playwright release rather than once per shard
+      # per day. The runner image already ships the system libraries, so on a
+      # hit nothing is installed at all.
+      - name: Cache the Playwright browser
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('autorecorder/node_modules/playwright-core/package.json') }}
+
       - name: Install Playwright & System Chromium Dependencies
+        if: steps.pw-cache.outputs.cache-hit != 'true'
         run: |
           cd autorecorder
-          npm install
+          [ -d node_modules/playwright ] || npm install
           npx playwright install --with-deps chromium
 
       # ffmpeg lives here, not in consolidate, because muxing happens once — in
@@ -518,6 +529,18 @@ jobs:
             echo "### 🧩 Worker Shard ${{ matrix.shard }}/3 produced no report" >> $GITHUB_STEP_SUMMARY
           fi
 
+      # RUN_REPORT and RECORD_RESULTS are written under fixed names, and the
+      # consolidate job merges every shard into one folder: without a rename
+      # the last shard to upload wins and the others vanish.
+      - name: Name shard-specific files
+        if: always()
+        run: |
+          set -euo pipefail
+          cd autorecorder/videos
+          for f in RUN_REPORT.md RUN_REPORT.json RECORD_RESULTS.json; do
+            [ -f "$f" ] && mv "$f" "${f%.*}-shard-${{ matrix.shard }}.${f##*.}" || true
+          done
+
       - name: Upload Shard Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -525,8 +548,9 @@ jobs:
           name: ${{ needs.prepare.outputs.run_name }}-shard-${{ matrix.shard }}
           path: |
             autorecorder/videos/*.webm
-            autorecorder/videos/RUN_REPORT.md
-            autorecorder/videos/RUN_REPORT.json
+            autorecorder/videos/RUN_REPORT-shard-*.md
+            autorecorder/videos/RUN_REPORT-shard-*.json
+            autorecorder/videos/RECORD_RESULTS-shard-*.json
             autorecorder/videos/logs/*.log
           if-no-files-found: ignore
           retention-days: 14
@@ -540,6 +564,12 @@ jobs:
     if: always() && needs.prepare.outputs.should_record == 'true'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Download all shard artifacts
         uses: actions/download-artifact@v4
         with:
@@ -547,9 +577,8 @@ jobs:
           pattern: ${{ needs.prepare.outputs.run_name }}-shard-*
           merge-multiple: true
 
-      # One folder holding every clip from the run, named for the project and
-      # the time it ran.
       - name: Upload Consolidated Demo Recordings Package
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.prepare.outputs.run_name }}

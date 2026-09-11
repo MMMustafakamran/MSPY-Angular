@@ -309,24 +309,6 @@ export const PAGES = definePages([
   reserve('memory'),
 
   {
-    id: 'attachments',
-    name: 'Attachments',
-    videoName: 'Attachments',
-    docPath: 'guides/threads-memory-attachments-headless',
-    route: 'attachments',
-    // `attachments : enable attachments` and the config block inside it.
-    ideFile: 'frontend/src/app/features/attachments/media-chat.component.ts',
-    startLine: 11,
-    endLine: 27,
-    // Asks for two values that exist only inside the attached image, so a
-    // correct answer is proof the file reached the model. A generic "what types
-    // of attachments are supported?" could be answered from the system prompt
-    // alone, which is how a broken upload comes to look fine on video.
-    prompt:
-      'I attached a chart. What is its title, and what is the Q4 number?',
-    waitAfterPromptMs: 4000,
-  },
-  {
     id: 'headless',
     name: 'Headless UI',
     videoName: 'HeadlessUi',

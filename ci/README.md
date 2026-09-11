@@ -24,8 +24,9 @@ ci/
     ├── pages.mjs         reads page ids from the recorder's config
     ├── preflight.mjs     port, credential and warmup checks
     ├── mux.mjs           voiceover muxing (the only implementation)
-    └── report.mjs        RUN_REPORT.md / .json
+    ├── report.mjs        RUN_REPORT.md / .json
 ```
+
 
 ## Commands
 
