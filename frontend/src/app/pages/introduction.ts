@@ -45,7 +45,7 @@ Copilot Runtime  ·  localhost:8201        &#8592; Node, frontend/server.ts
 Microsoft Agent Framework  ·  localhost:8200   &#8592; Python / FastAPI
   &#124;  add_agent_framework_fastapi_endpoint(app, agent, path="/")
   v
-OpenAI  (gpt-5.6-luna)</code></pre>
+OpenAI  (gpt-5.4-mini)</code></pre>
 
         <p class="mt-3 text-sm text-slate-700">
           Three processes, not two. Unlike the React quickstart — where the
