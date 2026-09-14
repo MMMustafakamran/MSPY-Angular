@@ -62,7 +62,7 @@ def _build_chat_client():
         )
     if os.getenv("OPENAI_API_KEY"):
         return OpenAIChatClient(
-            model=os.getenv("OPENAI_CHAT_MODEL_ID", "gpt-4o-mini"),
+            model=os.getenv("OPENAI_CHAT_MODEL_ID", "gpt-5.6-luna"),
             api_key=os.getenv("OPENAI_API_KEY"),
         )
     raise RuntimeError(
