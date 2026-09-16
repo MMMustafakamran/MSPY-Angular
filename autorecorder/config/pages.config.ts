@@ -294,13 +294,13 @@ export const PAGES = definePages([
       },
       {
         filePath: 'frontend/src/app/features/threads/threads-demo.component.ts',
-        startLine: 10,
-        endLine: 34,
+        startLine: 24,
+        endLine: 47,
       },
     ],
-    // Thread endpoints are licensed. Unlicensed, the hand-built list stays empty
-    // and the drawer renders its locked state — which is the expected result,
-    // and what this recording documents. The chat beside it answers normally.
+    // Both surfaces work: frontend/server.ts passes `intelligence`, so the
+    // hand-built list and the drawer resolve real threads. The guide never
+    // says that is required; that finding is reported, not typed on screen.
     prompt: 'In one line, what are threads for?',
     waitAfterPromptMs: 4000,
   },
