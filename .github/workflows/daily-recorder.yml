@@ -401,6 +401,9 @@ jobs:
       # configured wins. Unlike the Agno and Mastra repos, the model id here is
       # a real env var rather than a literal in the agent.
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      # Intelligence project key: the runtime passes `intelligence`, and
+      # CopilotKitIntelligence throws at construction when it is blank.
+      CPK_INTELLIGENCE_API_KEY: ${{ secrets.CPK_INTELLIGENCE_API_KEY }}
       OPENAI_CHAT_MODEL_ID: ${{ vars.OPENAI_CHAT_MODEL_ID || 'gpt-5.4-mini' }}
       AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
       AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
