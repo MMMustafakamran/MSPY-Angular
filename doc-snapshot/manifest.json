@@ -1,19 +1,19 @@
 {
   "schema": 1,
   "docsRoot": "https://docs.copilotkit.ai/angular/ms-agent-python",
-  "syncedAt": "2026-09-04T07:57:52.795Z",
+  "syncedAt": "2026-09-17T07:24:52.943Z",
   "pages": {
     "/angular/ms-agent-python": {
       "file": "angular__ms-agent-python.md",
-      "sha256": "64d64a220e96e9005c4630976baeba99d9e1284cfb64e4b616b6a193e69fd3d5",
-      "bytes": 7164,
-      "lines": 185,
+      "sha256": "ddcd29da57c37bc7229f3f502074257eee5d9c67d0a563144b0a3bdbbb2d7792",
+      "bytes": 7478,
+      "lines": 191,
       "routes": [
         "/"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Fri, 04 Sep 2026 07:57:52 GMT"
+      "date": "Thu, 17 Sep 2026 07:24:52 GMT"
     },
     "/angular/ms-agent-python/guides/a2ui": {
       "file": "angular__ms-agent-python__guides__a2ui.md",
@@ -116,15 +116,15 @@
     },
     "/angular/ms-agent-python/quickstart": {
       "file": "angular__ms-agent-python__quickstart.md",
-      "sha256": "64d64a220e96e9005c4630976baeba99d9e1284cfb64e4b616b6a193e69fd3d5",
-      "bytes": 7164,
-      "lines": 185,
+      "sha256": "ddcd29da57c37bc7229f3f502074257eee5d9c67d0a563144b0a3bdbbb2d7792",
+      "bytes": 7478,
+      "lines": 191,
       "routes": [
         "/quickstart"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Fri, 04 Sep 2026 07:57:52 GMT"
+      "date": "Thu, 17 Sep 2026 07:24:52 GMT"
     }
   },
   "sitemap": {
