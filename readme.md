@@ -59,7 +59,6 @@ flowchart LR
 
 ```
 mspy-angular/
-├── project-context.md          # Rules & ground truth for doc-project parity
 ├── doc-snapshot/               # Versioned upstream documentation snapshots
 │   ├── manifest.json           # SHA256 checksums & route mappings
 │   ├── CHANGELOG.md            # Doc drift history
