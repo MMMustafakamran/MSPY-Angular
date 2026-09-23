@@ -91,10 +91,14 @@ import { Callout, Panel, SourceCode, TryIt } from '../components/ui';
             <strong>AG-UI Events</strong>. Events are moving.
           </li>
           <li>
-            Open <strong>Threads</strong>. The list is unlocked (Intelligence is
+            Open <strong>Rich Threads</strong>. The list is unlocked (Intelligence is
             on), or locked with Enable Intelligence (Intelligence is off). This
             repo runs no license key, so <strong>locked is the pass</strong>
-            here — see the Threads route.
+            here — see the Threads route. At the installed
+            <code>&#64;copilotkit/web-inspector</code> 1.70.2 no Inspector tab
+            is called Rich Threads: the tab is <strong>Threads</strong>, and
+            "Rich Threads" is only a row in the launcher's hover menu (see the
+            README finding).
           </li>
         </ol>
       </ui-panel>
@@ -125,6 +129,12 @@ import { Callout, Panel, SourceCode, TryIt } from '../components/ui';
           <code>http://localhost</code>. A reader following the step against a
           production build finds nothing, and has no way to tell that from a
           broken setup.
+        </p>
+        <p class="mt-2">
+          Still present at <code>&#64;copilotkit/angular&#64;0.5.2</code>
+          (declared <code>^0.5.2</code>, installed
+          <code>&#64;copilotkit/shared</code> 1.70.2): the gate is unchanged in
+          the package source (checked 2026-09-23).
         </p>
       </ui-callout>
 
