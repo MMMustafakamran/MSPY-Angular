@@ -98,7 +98,7 @@ import { Callout, Panel, SourceCode, TryIt } from '../components/ui';
             <code>&#64;copilotkit/web-inspector</code> 1.70.2 no Inspector tab
             is called Rich Threads: the tab is <strong>Threads</strong>, and
             "Rich Threads" is only a row in the launcher's hover menu (see the
-            README finding).
+            FINDINGS.md).
           </li>
         </ol>
       </ui-panel>
