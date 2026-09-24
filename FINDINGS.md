@@ -1,12 +1,12 @@
 # Findings — MsPy-angular
-Current open doc defects only. A finding is added here only after a human reviews and approves it; page failures in a run are never written here automatically. Resolved or superseded findings are removed (see git history).
-Stack: `@copilotkit/angular` 0.5.2 (declared `^0.5.2`, latest) · `@copilotkit/web-inspector` 1.70.2 (undeclared, exact-pinned by angular).
-Major = blocks a reader (doesn't compile, crashes/throws, silently broken behaviour, step impossible to follow, missing required step/package, 404 target). Minor = one-line notes.
+Open doc defects only. An entry is added only after the user approves it. Numbers are stable IDs.
+Stack: `@copilotkit/angular` 0.5.2, `@copilotkit/runtime` 1.73.3, `@copilotkit/web-inspector` 1.70.2 (exact-pinned by angular). `ng serve` type-checks, so TS errors show up in dev.
 
-## Major
-
+## Dev blockers (seen with `ng serve` and normal use of the page)
 None open.
 
 ## Minor notes
+- #1 Quickstart (and landing): Step 3 says to open **Rich Threads**, but the web-inspector 1.70.2 tab is "Threads". "Rich Threads" is only the launcher menu row.
 
-- #1 Quickstart (`/quickstart`, same text on landing page): Step 3 says to open **Rich Threads**, but in web-inspector 1.70.2 the Inspector tab is named "Threads". "Rich Threads" is only the launcher hover-menu row (`HUD_THREADS_LABEL`). The tab was renamed in 1.73.1+, which Angular 0.5.2 can't install.
+## Build-only
+None.
