@@ -11,7 +11,7 @@
  * concurrently; the backend is started separately.
  *
  * The port numbers are this repo's, not the other Angular repos': the backend
- * already owns 8200, so the runtime moved to 8201 and `ng serve` to 4202. That
+ * already owns 8221, so the runtime moved to 8220 and `ng serve` to 4220. That
  * is what lets this stack run beside the Agno and Mastra ones without either
  * having to move.
  */
@@ -41,13 +41,13 @@ export const isWindows = process.platform === 'win32';
 export const PROJECT_SLUG = 'MsPy-angular';
 
 /**
- * `backend/main.py` passes `port=8200` to uvicorn as a literal — there is no
+ * `backend/main.py` passes `port=8221` to uvicorn as a literal — there is no
  * env var to read — so this is a constant here too rather than a default that
  * pretends to be overridable.
  */
-export const BACKEND_PORT = 8200;
-export const RUNTIME_PORT = Number(process.env.PORT || 8201);
-export const FRONTEND_PORT = Number(process.env.FRONTEND_PORT || 4202);
+export const BACKEND_PORT = 8221;
+export const RUNTIME_PORT = Number(process.env.PORT || 8220);
+export const FRONTEND_PORT = Number(process.env.FRONTEND_PORT || 4220);
 
 /**
  * The backend mounts a single `POST /` via

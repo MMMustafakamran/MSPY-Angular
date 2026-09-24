@@ -20,12 +20,12 @@ flowchart LR
     end
 
     subgraph Runtime ["Copilot Runtime (Node.js)"]
-        CR["@copilotkit/runtime/v2\n(Port 8201 /api/copilotkit)"]
+        CR["@copilotkit/runtime/v2\n(Port 8220 /api/copilotkit)"]
         HA["HttpAgent (AG-UI Client)"]
     end
 
     subgraph Backend ["Agent Framework (Python / FastAPI)"]
-        AF["Agent Framework Agent\n(Port 8200 POST /)"]
+        AF["Agent Framework Agent\n(Port 8221 POST /)"]
         Tools["Tools: getWeather, update_language"]
     end
 
@@ -39,17 +39,17 @@ flowchart LR
 ```
 
 1. **Frontend (Browser - Angular 22)**:
-   - Configured in [app.config.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/src/app/app.config.ts) using `provideCopilotKit({ runtimeUrl: 'http://localhost:8201/api/copilotkit' })`.
+   - Configured in [app.config.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/src/app/app.config.ts) using `provideCopilotKit({ runtimeUrl: 'http://localhost:8220/api/copilotkit' })`.
    - Never exposes OpenAI keys directly to the browser.
    - Built with modern Angular conventions: signal-based reactivity, standalone components, native control flow (`@if`, `@for`), and Tailwind CSS v4.
 
 2. **Copilot Runtime Proxy ([frontend/server.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/server.ts))**:
-   - Runs on **port 8201** as a standalone Node.js server using `@copilotkit/runtime/v2`.
-   - Registers two agent aliases (`default` and `support`) pointing to the Python agent at `http://localhost:8200/` via `@ag-ui/client`'s `HttpAgent`.
+   - Runs on **port 8220** as a standalone Node.js server using `@copilotkit/runtime/v2`.
+   - Registers two agent aliases (`default` and `support`) pointing to the Python agent at `http://localhost:8221/` via `@ag-ui/client`'s `HttpAgent`.
    - Enables `a2ui: {}` middleware across all registered agents.
 
 3. **Backend Agent ([backend/main.py](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/backend/main.py))**:
-   - Runs on **port 8200** via FastAPI and Uvicorn.
+   - Runs on **port 8221** via FastAPI and Uvicorn.
    - Powered by `agent-framework-ag-ui` and `agent-framework-openai`.
    - Exposes tools like `getWeather` and `update_language` alongside two-way state schema definitions (`STATE_SCHEMA`, `PREDICT_STATE_CONFIG`).
 
@@ -70,7 +70,7 @@ mspy-angular/
 │   └── main.py                 # FastAPI app, agent tools, AG-UI endpoint
 └── frontend/                   # Angular 22 Application + Node Runtime
     ├── package.json            # npm scripts & dependencies
-    ├── server.ts               # Copilot Runtime server (Node.js, Port 8201)
+    ├── server.ts               # Copilot Runtime server (Node.js, Port 8220)
     ├── scripts/
     │   └── generate-sources.ts # Syncs running source code into TypeScript strings
     └── src/
@@ -114,7 +114,7 @@ The project defines each feature area in [nav-config.ts](file:///c:/Users/dynami
    - The script [scripts/generate-sources.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/scripts/generate-sources.ts) runs at `prestart` and `prebuild` time.
    - It reads actual `.ts`, `.html`, and `.css` files from disk and compiles them into a source map in `generated-sources.ts`. What the documentation UI renders is guaranteed to be the exact code being executed.
 3. **Real-time Backend Health Monitoring**:
-   - [backend-health.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/src/app/components/backend-health.ts) continuously verifies connectivity to both the Copilot Runtime (`http://localhost:8201/api/copilotkit/info`) and the Python Agent Framework (`http://localhost:8200/openapi.json`).
+   - [backend-health.ts](file:///c:/Users/dynamic%20computer/Desktop/work/FIQROS/optimized-malaika/mspy-angular/frontend/src/app/components/backend-health.ts) continuously verifies connectivity to both the Copilot Runtime (`http://localhost:8220/api/copilotkit/info`) and the Python Agent Framework (`http://localhost:8221/openapi.json`).
 
 ---
 
@@ -127,7 +127,7 @@ cd backend
 # Requires Python 3.13+ and uv (or virtualenv)
 uv sync
 uv run main.py
-# Runs on http://localhost:8200
+# Runs on http://localhost:8221
 ```
 
 _Note: Ensure either `OPENAI_API_KEY` or `AZURE_OPENAI_ENDPOINT` + `AZURE_OPENAI_API_KEY` are configured in `.env`._
@@ -142,8 +142,8 @@ npm install
 npm run dev
 
 # Option B: Run separately
-npm run runtime    # Starts Copilot Runtime on http://localhost:8201
-npm start          # Starts Angular Dev Server on http://localhost:4202
+npm run runtime    # Starts Copilot Runtime on http://localhost:8220
+npm start          # Starts Angular Dev Server on http://localhost:4220
 ```
 
 #### 3. Automated Screen Recording & Demonstration Suite
@@ -172,7 +172,7 @@ npm run automate -- --limit=3 --ignore-doc-drift
 It starts the servers itself. The commands below are the by-hand route, against
 servers you started yourself.
 
-Once the backend (`8200`), runtime (`8201`), and frontend dev server (`4202`) are running:
+Once the backend (`8221`), runtime (`8220`), and frontend dev server (`4220`) are running:
 
 ```bash
 cd autorecorder

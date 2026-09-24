@@ -22,13 +22,13 @@ Both services must be up first — the recorder refuses to start otherwise, beca
 a video of a dead page is worse than no video.
 
 ```bash
-cd backend  && uv run main.py    # Agent Framework / FastAPI :8200
-cd frontend && npm run dev       # Copilot Runtime :8201 + ng serve :4200
+cd backend  && uv run main.py    # Agent Framework / FastAPI :8221
+cd frontend && npm run dev       # Copilot Runtime :8220 + ng serve :4220
 ```
 
 `npm run dev` starts **two** processes. Angular has no server route to host the
 Copilot Runtime, so it runs as its own Node process (`frontend/server.ts`). The
-Agent Framework backend already owns 8200, so the runtime binds **8201** and the
+Agent Framework backend already owns 8221, so the runtime binds **8220** and the
 browser posts across origins to it — which is why `runtimeWarmPath` in
 `project.config.ts` is an absolute URL rather than a path.
 

@@ -7,9 +7,9 @@
  * them alive for as long as the recorder needs them.
  *
  * Two spawns, three services: `npm run dev` in frontend/ starts the Copilot
- * Runtime (server.ts, :8201) and `ng serve` (:4202) together under
+ * Runtime (server.ts, :8220) and `ng serve` (:4220) together under
  * concurrently, because Angular has no server route to host the runtime the way
- * a Next app does. The Agent Framework backend (:8200) is the second spawn.
+ * a Next app does. The Agent Framework backend (:8221) is the second spawn.
  *
  * Flags:
  *   --pull               git pull before running
@@ -145,7 +145,7 @@ function cleanup() {
   }
   // The whole tree, not just the shell: `npm run dev` is concurrently, which
   // owns the runtime and ng serve as children. Killing the parent alone leaves
-  // two servers holding 8201 and 4202, and the next run refuses to start.
+  // two servers holding 8220 and 4220, and the next run refuses to start.
   if (frontendProc) {
     killTree(frontendProc);
     frontendProc = null;

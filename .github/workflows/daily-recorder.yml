@@ -413,7 +413,7 @@ jobs:
       AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
       AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT_NAME }}
       # Where the Copilot Runtime (frontend/server.ts) finds the backend.
-      MICROSOFT_AGENT_FRAMEWORK_URL: http://127.0.0.1:8200/
+      MICROSOFT_AGENT_FRAMEWORK_URL: http://127.0.0.1:8221/
 
     steps:
       - name: Checkout Code

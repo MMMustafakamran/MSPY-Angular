@@ -66,18 +66,18 @@ Angular has no server route to host the Copilot Runtime the way a Next app
 does, so this stack is one process longer than its React twin:
 
 ```
-browser ──▶ ng serve :4202 ──▶ Copilot Runtime :8201 ──▶ Agent Framework :8200
+browser ──▶ ng serve :4220 ──▶ Copilot Runtime :8220 ──▶ Agent Framework :8221
             (frontend)         (frontend/server.ts)      (backend/main.py)
 ```
 
-The ports are this repo's own. The backend binds 8200, so the runtime moved to
-8201 and `ng serve` to 4202 — which is what lets this stack run beside the Agno
+The ports are this repo's own. The backend binds 8221, so the runtime moved to
+8220 and `ng serve` to 4220 — which is what lets this stack run beside the Agno
 and Mastra ones without either having to move.
 
 `npm run dev` inside `frontend/` starts the first two together under
 `concurrently`, which is why the pipeline spawns two processes for three
 services — and why cleanup kills the whole process tree. Killing only the shell
-leaves the runtime and `ng serve` holding 8201 and 4202, and the next run
+leaves the runtime and `ng serve` holding 8220 and 4220, and the next run
 refuses to start on a busy port.
 
 Ports are env-overridable, which is how a run moves off a port another project
@@ -87,11 +87,11 @@ is already holding:
 PORT=8301 npm run dev                                  # frontend/server.ts, and
                                                        # runtimeUrl in
                                                        # frontend/src/app/app.config.ts,
-                                                       # which hardcodes :8201
+                                                       # which hardcodes :8220
 FRONTEND_PORT=4302 node ci/automate.mjs                # what this pipeline checks
 ```
 
-The backend port is **not** overridable: `backend/main.py` passes `port=8200` to
+The backend port is **not** overridable: `backend/main.py` passes `port=8221` to
 uvicorn as a literal. Moving it means editing that line and
 `MICROSOFT_AGENT_FRAMEWORK_URL`, which is what points the runtime at it.
 
@@ -305,7 +305,7 @@ by `concurrently`. They are uploaded with the CI artifacts.
 **Recorder aborts on preflight** — the app was still doing its first load. The
 `lib/config.mjs` gets the same treatment.
 
-**Runtime up, backend silent** — the runtime answers on 8201 whether or not it
+**Runtime up, backend silent** — the runtime answers on 8220 whether or not it
 can reach the backend. `warmRuntimeEndpoint` hits `/api/copilotkit/info`, the
 request that actually goes through to the Agent Framework process, so that
 failure shows up here rather than as a demo where nothing ever replies.
