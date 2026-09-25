@@ -39,6 +39,7 @@ import { type Page } from 'playwright';
 import { waitForPageReady } from './page-ready';
 
 import { runChatUiAction } from './chat-ui.action';
+import { runA2uiCompileAction } from './compile-demos.action';
 import { runHeadlessAction } from './headless.action';
 import { runHitlAction } from './hitl.action';
 import { runInspectorAction } from './inspector.action';
@@ -63,6 +64,10 @@ export const ACTION_MAP: Record<string, PageActionHandler> = {
   // it. Falling through to runStandardAction here recorded a chat and
   // nothing else.
   inspector: runInspectorAction,
+  // Findings clip: the A2UI guide's code compiled through the doc-a2ui build
+  // config, errors replayed from a real `ng serve` capture. See
+  // actions/compile-demos.action.ts.
+  'a2ui-compile': runA2uiCompileAction,
 };
 
 export async function executePageAction(

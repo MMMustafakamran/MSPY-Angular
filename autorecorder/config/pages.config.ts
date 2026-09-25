@@ -368,4 +368,29 @@ export const PAGES = definePages([
     prompt: 'Quick check: what is 17 times 23?',
     waitAfterPromptMs: 4000,
   },
+  // ── Findings clip (1-Demos/DEMO_SCRIPT.md) ─────────────────────────────────
+  // Not a doc-nav page: the A2UI guide's code compiled verbatim. The `a2ui`
+  // slot above stays reserved (no working A2UI demo yet), so this clip is
+  // appended and numbering elsewhere is unchanged. The engine intro shows the
+  // doc and the harness's A2UI wiring, and `route` is the plain A2UI chat (the
+  // engine needs `chatReady` there before the handler runs). The handler
+  // (actions/compile-demos.action.ts) then plays the script: doc snippets, the
+  // verbatim file, the real `ng serve` error, and typed notes. No prompt is
+  // sent; `prompt` only satisfies the registry contract.
+  {
+    id: 'a2ui-compile',
+    name: 'Findings - A2UI. Undefined names (pending approval)',
+    videoName: 'A2uiUndefinedNames',
+    docPath: 'guides/a2ui',
+    route: 'a2ui',
+    // `a2ui : recover incomplete streams start|end`: recovery and no catalog,
+    // what the harness can do from the guide.
+    ideFile: 'frontend/src/app/app.config.ts',
+    startLine: 53,
+    endLine: 57,
+    extraTabs: [
+      { filePath: 'frontend/src/app/features/a2ui/a2ui-chat.component.ts', startLine: 12, endLine: 24 },
+    ],
+    prompt: 'No prompt: this take compiles the guide code (see actions/compile-demos.action.ts).',
+  },
 ]).filter((page) => !page.id.startsWith(RESERVED_PREFIX));
