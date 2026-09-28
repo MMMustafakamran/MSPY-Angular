@@ -60,8 +60,7 @@ const RESERVED_PREFIX = 'reserved:';
  * Reserving the slot keeps the number attached to the guide rather than to
  * whatever this repo happens to record. A reserved entry exists only to occupy
  * an index — it is filtered out below, before `definePages`' result is
- * exported, so no doctor check, CLI flag, shard split or recording ever sees
- * one. Its fields are placeholders for that reason.
+ * exported, so no doctor check, CLI flag or recording ever sees one. Its fields are placeholders for that reason.
  *
  * When the demo does land, replace the `reserve(...)` call with the real entry
  * in place and the number it has always been reserved for is the one it gets.
@@ -92,8 +91,9 @@ export const PAGES = definePages([
     // legible in one frame.
     // Leads with the versions, not the manifest. package.json declares
     // RANGES, so this clip used to show a floor while the run it
-    // documented had installed something newer. VERSIONS.md is generated
-    // after install (ci/write-versions.mjs) and names what resolved.
+    // documented had installed something newer. VERSIONS.md names what
+    // resolved; it is generated locally by autorecorder/scripts/write-versions.mjs
+    // (run by `npm run doctor`) and not committed.
     // package.json stays as the first tab: the range is still what a
     // reader would write in their own project.
     ideFile: 'frontend/VERSIONS.md',

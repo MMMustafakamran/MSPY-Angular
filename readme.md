@@ -157,21 +157,6 @@ Each of the 11 pages gets one video in three steps: the official doc page, a
 simulated VS Code showing this repo's own source at the relevant lines, then the
 chrome-free `/demo` route driven live.
 
-##### One command, from a cold repo
-
-[`ci/`](ci/README.md) drives the whole thing — doc-drift check, preflight,
-dependency install, all three servers, recording and report — from a single Node
-process, and is what the nightly GitHub Actions workflow runs:
-
-```bash
-npm run automate                              # everything, all pages
-npm run automate -- --pages=quickstart,threads
-npm run automate -- --limit=3 --ignore-doc-drift
-```
-
-It starts the servers itself. The commands below are the by-hand route, against
-servers you started yourself.
-
 Once the backend (`8221`), runtime (`8220`), and frontend dev server (`4220`) are running:
 
 ```bash
@@ -210,19 +195,6 @@ npm run doc:check
 npm run doc:sync
 ```
 
-##### Shared Angular pages in the sitemap (since 2026-09-23)
-
-On 2026-09-23 upstream's sitemap began listing the shared Angular pages once,
-framework-less, under `/angular/*` instead of once per framework under
-`/angular/ms-agent-python/*`. `ci/check-doc-drift.mjs` now maps each of those
-onto `/angular/ms-agent-python/<path>` (every one answers 200 there). That
-surfaced 47 shared pages this harness has never tracked (backend/\*, deploy/\*,
-intelligence/\*, troubleshooting/\*, webmcp, features, telemetry, …), including
-the new `intelligence/plans`, `intelligence/analytics` and
-`intelligence/channels`. All 47 are acknowledged in `sitemap.knownUnmapped` in
-`doc-snapshot/manifest.json`: reference-only, not recordable, untracked. Coverage
-is identical to before the sitemap restructure.
-
 ---
 
 ### Known doc findings
@@ -231,19 +203,18 @@ Moved to [FINDINGS.md](FINDINGS.md).
 
 ### Upgrading Packages
 
-Most upgrades need no action. Every run drops the lockfiles and re-resolves, so
-the newest versions the declared ranges already allow are installed and recorded
-the night they ship. What follows is only for **crossing a range boundary**,
-which is a reviewed edit.
+Most upgrades need no action: a fresh install already picks up the newest
+versions the declared ranges allow. What follows is only for **crossing a range
+boundary**, which is a reviewed edit.
 
 #### What is worth upgrading — check first
 
 ```powershell
-node ci/check-versions.mjs
+npm --prefix frontend outdated
 ```
 
-Read-only. It sorts what is outdated into the only three things it can be, and
-just one of them is actionable here:
+Read-only. Anything it lists as outdated is one of only three things, and just
+one of them is actionable here:
 
 | Cause | Do |
 |---|---|
@@ -253,8 +224,7 @@ just one of them is actionable here:
 
 `@copilotkit/angular` exact-pins `@copilotkit/core`, and Angular 22 requires
 `typescript >=6.0 <6.1` — so TypeScript reads a full major behind and must stay
-there. The nightly publishes this report on its own; see
-[`ci/VERSION-WATCH.md`](ci/VERSION-WATCH.md).
+there.
 
 #### 1. Frontend (Angular / npm)
 
@@ -272,10 +242,9 @@ what this repo is for. Revert with
 Two things not to do:
 
 - **`npx npm-check-updates -u`** rewrites `package.json` to the newest release of
-  everything, ignoring the ranges. It used to run in CI and was the largest
-  single source of failures — it bumped all twelve `@angular/*` packages past
-  Angular's exact inter-package peer requirements, leaving the tree
-  unsatisfiable. Removed in `1c9b067`.
+  everything, ignoring the ranges. It was once the largest single source of
+  failures here — it bumped all twelve `@angular/*` packages past Angular's
+  exact inter-package peer requirements, leaving the tree unsatisfiable.
 - **`npm install --legacy-peer-deps`** does not fix a peer conflict, it hides
   one. The error it silences is the signal that the combination being installed
   was never meant to work together — precisely what this harness reports on.

@@ -15,8 +15,7 @@
  * the page's working demo route (that is what `chatReady` waits for). The take
  * below then plays the script's beats, one typed Notepad note per spoken line.
  *
- * The finding this clip evidences is PENDING APPROVAL for FINDINGS.md (probe
- * key 'a2ui-pending' in ci/findings.probes.mjs).
+ * The finding this clip evidences is PENDING APPROVAL for FINDINGS.md.
  */
 import { PROJECT } from '../config/project.config';
 import { type ActionContext, type PageActionHandler } from '../core/types';
